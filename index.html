@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" />
+
+        <style>
+            body {
+                background: url(bg.jpg) no-repeat center center fixed;
+            }
+
+            * {
+                font-family: 'Open Sans', sans-serif !important;
+                overflow: hidden;
+            }
+
+            .fill {
+                width: 100%;
+                height: 100%;
+            }
+
+            .container {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+
+            #scene2 {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .center {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+
+        <title>shrirajh.me</title>
+    </head>
+    <body>
+        <div class="container">
+            <ul id="scene">
+                <li class="layer" data-depth="0.50">
+                    <div class="ui center aligned very padded basic segment">
+                        <div class="ui header">
+                            <h1 id="mainheader" style="font-size: 3.5em; font-weight: lighter;">shrirajh.me</h1>
+                        </div>
+                    </div>
+                    <div class="ui center aligned very padded basic segment">
+                        <div class="ui header">
+                            <h1 style="font-size: 2em; font-weight: lighter;">this page is intentionally blank</h1>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/jquery.parallax.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
+
+    <script>
+        $("#scene").parallax();
+    </script>
+</html>
