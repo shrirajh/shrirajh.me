@@ -1,80 +1,1172 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shrirajh.me</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --fg: #222;
+            --fg-muted: #555;
+            --fg-faint: #888;
+            --border: #ccc;
+            --aqua: #9ab;
+            --aqua-back: #8899aa55;
+            --splash: #8ac;
+            --food: #996633;
+        }
 
-        <style>
-            body {
-                background: url(bg.jpg) no-repeat center center fixed;
-            }
+        :root.dark {
+            --bg: #111;
+            --fg: #ddd;
+            --fg-muted: #aaa;
+            --fg-faint: #777;
+            --border: #444;
+            --aqua: #5a7a6a;
+            --aqua-back: #3a5a4a44;
+            --splash: #6a9a8a;
+            --food: #aa8855;
+        }
 
-            * {
-                font-family: 'Open Sans', sans-serif !important;
-                overflow: hidden;
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-            .fill {
-                width: 100%;
-                height: 100%;
-            }
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background: var(--bg);
+            color: var(--fg);
+            padding: 2rem;
+            padding-bottom: 10rem;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
 
-            .container {
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: auto;
-            }
+        header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
 
-            #scene2 {
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                width: 100%;
-                height: 100%;
-            }
+        h1 {
+            font-size: 1.4rem;
+            font-weight: normal;
+        }
 
-            .center {
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                width: 100%;
-                height: 100%;
-            }
-        </style>
+        .blank {
+            color: var(--fg-faint);
+            margin-top: 0.25rem;
+            font-size: 0.9rem;
+        }
 
-        <title>shrirajh.me</title>
-    </head>
-    <body>
-        <div class="container">
-            <ul id="scene">
-                <li class="layer" data-depth="0.50">
-                    <div class="ui center aligned very padded basic segment">
-                        <div class="ui header">
-                            <h1 id="mainheader" style="font-size: 3.5em; font-weight: lighter;">shrirajh.me</h1>
-                        </div>
-                    </div>
-                    <div class="ui center aligned very padded basic segment">
-                        <div class="ui header">
-                            <h1 style="font-size: 2em; font-weight: lighter;">this page was left intentionally blank</h1>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </body>
+        #theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--fg-faint);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+        }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/jquery.parallax.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
+        #theme-toggle:hover {
+            color: var(--fg);
+            border-color: var(--fg);
+        }
+
+        nav {
+            margin-bottom: 2rem;
+        }
+
+        nav a {
+            color: var(--fg);
+            margin-right: 1.5rem;
+            text-decoration: none;
+        }
+
+        nav a:hover, nav .ct:hover {
+            text-decoration: underline;
+        }
+
+        nav .ct {
+            color: var(--fg);
+            margin-right: 1.5rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #publications h2 {
+            font-size: 1rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .pub-divider {
+            display: flex;
+            align-items: center;
+            color: var(--fg-faint);
+            font-size: 0.7rem;
+            margin: 1.2rem 0;
+            opacity: 0.6;
+            white-space: nowrap;
+        }
+
+        .pub-divider::before,
+        .pub-divider::after {
+            content: "";
+            flex: 1;
+            border-top: 1px dotted var(--fg-faint);
+        }
+
+        .pub-divider span {
+            padding: 0 0.8rem;
+            letter-spacing: 0.3em;
+        }
+
+        .pub-list {
+            list-style: none;
+        }
+
+        .pub-list li {
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            overflow: hidden;
+            cursor: default;
+            position: relative;
+        }
+
+        .pub-list .pub-title {
+            font-weight: bold;
+        }
+
+        .pub-list .pub-journal {
+            color: var(--fg-muted);
+        }
+
+        .pub-list .pub-year {
+            color: var(--fg-faint);
+        }
+
+        .pub-list a {
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .pub-list a:hover {
+            text-decoration: underline;
+        }
+
+        .pub-role {
+            font-size: 0.7rem;
+            color: var(--fg-faint);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            margin-left: 0.5rem;
+        }
+
+        .pub-list li:hover .pub-role {
+            opacity: 1;
+        }
+
+        .pub-summary {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            color: var(--fg-muted);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            padding-left: 0.5rem;
+            border-left: 1px solid var(--border);
+        }
+
+        .pub-summary.open {
+            max-height: 10rem;
+            opacity: 1;
+        }
+
+        .pub-list li.expandable {
+            cursor: pointer;
+        }
+
+        .pub-list li.expandable .pub-title::before {
+            content: "+ ";
+            color: var(--fg-faint);
+            font-weight: normal;
+        }
+
+        .pub-list li.expandable.expanded .pub-title::before {
+            content: "- ";
+        }
+
+        #pub-status {
+            color: var(--fg-faint);
+            font-size: 0.85rem;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .loading-cursor::after {
+            content: "_";
+            animation: blink 1s step-end infinite;
+        }
+
+        /* Typeout animation */
+        .pub-list li {
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .pub-list li.visible {
+            max-height: 12rem;
+            overflow: visible;
+        }
+
+        /* Aquarium */
+        #aquarium {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 9rem;
+            overflow: visible;
+            z-index: 998;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        #aquarium::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 12rem;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg) 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Splash particles */
+        .splash {
+            position: fixed;
+            pointer-events: none;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.65rem;
+            color: var(--splash);
+            z-index: 999;
+            user-select: none;
+        }
+
+        /* Seaweed */
+        .seaweed {
+            position: absolute;
+            bottom: 0;
+            white-space: pre;
+            line-height: 1.1;
+            transform-origin: bottom center;
+        }
+
+        .seaweed.depth-back {
+            color: var(--aqua-back);
+            font-size: 0.7rem;
+            z-index: 1;
+            animation: sway-back 6s ease-in-out infinite;
+        }
+
+        .seaweed.depth-mid {
+            color: var(--aqua);
+            opacity: 0.4;
+            font-size: 0.8rem;
+            z-index: 2;
+            animation: sway-mid 4.5s ease-in-out infinite;
+        }
+
+        .seaweed.depth-front {
+            color: var(--aqua);
+            opacity: 0.7;
+            font-size: 0.95rem;
+            z-index: 3;
+            animation: sway-front 3.5s ease-in-out infinite;
+        }
+
+        @keyframes sway-back {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @keyframes sway-mid {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        @keyframes sway-front {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+
+        /* Fish */
+        .fish {
+            position: absolute;
+            white-space: nowrap;
+            z-index: 4;
+            will-change: transform, opacity, font-size;
+        }
+
+        /* Food pellets */
+        .food {
+            position: fixed;
+            pointer-events: none;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.7rem;
+            color: var(--food);
+            z-index: 999;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>shrirajh.me</h1>
+        <div class="blank">I write code and prescriptions</div>
+        <button id="theme-toggle"></button>
+    </header>
+
+    <nav>
+        <a href="https://github.com/shrirajh">github</a>
+        <a href="https://scholar.google.com/citations?user=aY2GGS0AAAAJ&hl=en">scholar</a>
+        <a href="https://orcid.org/0009-0005-8604-3750">orcid</a>
+        <span class="ct" id="ct0"></span>
+    </nav>
+
+    <section id="publications">
+        <h2>publications <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;">+ click to expand</span></h2>
+        <div id="pub-status" class="loading-cursor">loading</div>
+        <div id="pub-sections"></div>
+    </section>
+
+    <div id="aquarium"></div>
+    <div style="position:fixed;bottom:0.3rem;left:0;width:100%;text-align:center;font-size:0.6rem;color:var(--fg-faint);opacity:0.4;z-index:1000;pointer-events:none;">// click to feed</div>
 
     <script>
-        $("#scene").parallax();
+        // -- Contact --
+        (function () {
+            var c = document.getElementById("ct0");
+            var k = 42;
+            var p = [89,66,88,67,88,75,64,66,4,89,75,94,66,79,75,65,79,79,88,94,66,83];
+            var d = [89,75,4,77,69,92,4,75,95];
+            var l = [73,69,68,94,75,73,94];
+            var ready = false;
+            var revealed = false;
+            var hoverTimer = null;
+
+            function dec(a) { return a.map(function (c) { return String.fromCharCode(c ^ k); }).join(""); }
+            function addr() { return dec(p) + String.fromCharCode(106 ^ k) + dec(d); }
+
+            function reveal() {
+                if (revealed) return;
+                revealed = true;
+                var full = addr();
+                var a = document.createElement("a");
+                a.href = dec([71,75,67,70,94,69,16]) + full;
+                a.className = "ct";
+                a.style.opacity = "0";
+                a.style.transition = "opacity 0.4s ease";
+                c.style.transition = "opacity 0.2s ease";
+                c.style.opacity = "0";
+                setTimeout(function () {
+                    c.parentNode.replaceChild(a, c);
+                    // Typeout
+                    var i = 0;
+                    function type() {
+                        if (i >= full.length) {
+                            a.style.opacity = "1";
+                            return;
+                        }
+                        a.textContent += full[i];
+                        i++;
+                        a.style.opacity = "1";
+                        setTimeout(type, 20 + Math.random() * 30);
+                    }
+                    type();
+                }, 200);
+            }
+
+            function init() {
+                if (ready) return;
+                ready = true;
+                c.textContent = dec(l);
+                var spinner = null;
+                var spinFrames = ["|", "/", "-", "\\"];
+                var spinIdx = 0;
+                var spinInterval = null;
+                c.addEventListener("mouseenter", function () {
+                    if (revealed) return;
+                    spinner = document.createElement("span");
+                    spinner.style.marginLeft = "0.4em";
+                    spinner.style.color = "var(--fg-faint)";
+                    spinner.textContent = spinFrames[0];
+                    c.appendChild(spinner);
+                    spinInterval = setInterval(function () {
+                        spinIdx = (spinIdx + 1) % spinFrames.length;
+                        if (spinner) spinner.textContent = spinFrames[spinIdx];
+                    }, 100);
+                    hoverTimer = setTimeout(reveal, 600);
+                });
+                c.addEventListener("mouseleave", function () {
+                    if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
+                    if (spinInterval) { clearInterval(spinInterval); spinInterval = null; }
+                    if (spinner && spinner.parentNode) { spinner.remove(); spinner = null; }
+                });
+                c.addEventListener("click", function () {
+                    if (revealed) return;
+                    if (!hoverTimer) {
+                        // Start spinner + timer (for touch/click without hover)
+                        if (!spinner) {
+                            spinner = document.createElement("span");
+                            spinner.style.marginLeft = "0.4em";
+                            spinner.style.color = "var(--fg-faint)";
+                            spinner.textContent = spinFrames[0];
+                            c.appendChild(spinner);
+                            spinInterval = setInterval(function () {
+                                spinIdx = (spinIdx + 1) % spinFrames.length;
+                                if (spinner) spinner.textContent = spinFrames[spinIdx];
+                            }, 100);
+                        }
+                        hoverTimer = setTimeout(reveal, 600);
+                    }
+                });
+            }
+            document.addEventListener("mousemove", init, { once: true });
+            document.addEventListener("touchstart", init, { once: true });
+            document.addEventListener("keydown", init, { once: true });
+        })();
+
+        // -- Theme toggle --
+        function getSystemTheme() {
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.classList.toggle("dark", theme === "dark");
+            document.getElementById("theme-toggle").textContent = theme === "dark" ? "light" : "dark";
+        }
+
+        function initTheme() {
+            var saved = localStorage.getItem("theme");
+            applyTheme(saved || getSystemTheme());
+        }
+
+        document.getElementById("theme-toggle").addEventListener("click", function () {
+            var isDark = document.documentElement.classList.contains("dark");
+            var next = isDark ? "light" : "dark";
+            localStorage.setItem("theme", next);
+            applyTheme(next);
+        });
+
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+            if (localStorage.getItem("theme") == null) applyTheme(getSystemTheme());
+        });
+
+        initTheme();
+
+        // -- Aquarium --
+        (function () {
+            var tank = document.getElementById("aquarium");
+
+            // Seaweed shapes (read bottom to top)
+            var shapes = [
+                ")\n(\n)\n(\n)\n(\n|",
+                "(\n)\n(\n)\n(\n|",
+                " )\n(\n )\n(\n )\n |",
+                "}\n{\n}\n{\n}\n|",
+                "(\n)\n(\n)\n|",
+                ")\n(\n)\n|"
+            ];
+
+            var seaweedData = [
+                // depth, left%, shape index, animation-delay
+                { depth: "back",  left: 5,  shape: 0, delay: 0 },
+                { depth: "back",  left: 22, shape: 3, delay: 1.5 },
+                { depth: "back",  left: 55, shape: 1, delay: 0.8 },
+                { depth: "back",  left: 78, shape: 4, delay: 2.1 },
+                { depth: "back",  left: 92, shape: 0, delay: 0.3 },
+                { depth: "mid",   left: 12, shape: 2, delay: 0.5 },
+                { depth: "mid",   left: 38, shape: 0, delay: 1.8 },
+                { depth: "mid",   left: 65, shape: 3, delay: 0.2 },
+                { depth: "mid",   left: 85, shape: 1, delay: 1.0 },
+                { depth: "front", left: 3,  shape: 1, delay: 0.7 },
+                { depth: "front", left: 30, shape: 4, delay: 1.3 },
+                { depth: "front", left: 50, shape: 2, delay: 0 },
+                { depth: "front", left: 72, shape: 0, delay: 2.0 },
+                { depth: "front", left: 95, shape: 3, delay: 0.4 }
+            ];
+
+            for (var i = 0; i < seaweedData.length; i++) {
+                var sd = seaweedData[i];
+                var sw = document.createElement("span");
+                sw.className = "seaweed depth-" + sd.depth;
+                sw.textContent = shapes[sd.shape];
+                sw.style.left = sd.left + "%";
+                sw.style.animationDelay = sd.delay + "s";
+                tank.appendChild(sw);
+            }
+
+            // Fish — JS-driven fake 3D
+            // Growth stages per fish species: each array is [ltr, rtl] at increasing size
+            var fishSpecies = [
+                [
+                    { ltr: "><>", rtl: "<><" },
+                    { ltr: "><<>", rtl: "<>><" },
+                    { ltr: "><((>", rtl: "<))><" },
+                    { ltr: "><(((>", rtl: "<)))><" }
+                ],
+                [
+                    { ltr: "><))'>", rtl: "<'((<>" },
+                    { ltr: ">><))'>", rtl: "<'((<>>" },
+                    { ltr: ">>><)))'>", rtl: "<'(((<>>>" },
+                    { ltr: ">>>><))))'>", rtl: "<'((((<>>>>" }
+                ],
+                [
+                    { ltr: ">=>", rtl: "<=<" },
+                    { ltr: ">==>", rtl: "<==<" },
+                    { ltr: ">==>=>", rtl: "<=<==<" },
+                    { ltr: "<>==>=>>", rtl: "<<=>==><" }
+                ]
+            ];
+
+            // Thresholds: meals needed for each growth stage
+            var growthAt = [0, 3, 8, 15];
+
+            var fishes = [];
+            var foodPellets = [];
+            var tankH = 144; // tank height in px (9rem)
+            var surfaceY = tankH; // water surface line
+
+            function getGrowthStage(meals) {
+                for (var g = growthAt.length - 1; g >= 0; g--) {
+                    if (meals >= growthAt[g]) return g;
+                }
+                return 0;
+            }
+
+            function makeFish() {
+                var speciesIdx = Math.floor(Math.random() * fishSpecies.length);
+                var species = fishSpecies[speciesIdx];
+                var form = species[0]; // start at smallest
+                var goRight = Math.random() > 0.5;
+                var z = 0.15 + Math.random() * 0.85;
+
+                var el = document.createElement("span");
+                el.className = "fish";
+                el.textContent = goRight ? form.ltr : form.rtl;
+                tank.appendChild(el);
+
+                var speed = (0.3 + z * 0.7) * (0.6 + Math.random() * 0.6);
+                var f = {
+                    el: el,
+                    speciesIdx: speciesIdx,
+                    stage: 0,
+                    meals: 0,
+                    dir: goRight ? 1 : -1,
+                    x: goRight ? -80 : window.innerWidth + 80,
+                    y: 10 + Math.random() * (tankH - 20),
+                    z: z,
+                    targetZ: z,
+                    speed: speed,
+                    vy: 0,
+                    yPhase: Math.random() * Math.PI * 2,
+                    yAmp: 0.2 + Math.random() * 0.4,
+                    yFreq: 0.008 + Math.random() * 0.012,
+                    zDriftTimer: 200 + Math.floor(Math.random() * 400),
+                    splashCooldown: 0,
+                    alive: true
+                };
+                fishes.push(f);
+                return f;
+            }
+
+            function getFishForm(f) {
+                return fishSpecies[f.speciesIdx][f.stage];
+            }
+
+            function updateFishText(f) {
+                var form = getFishForm(f);
+                f.el.textContent = f.dir > 0 ? form.ltr : form.rtl;
+            }
+
+            function fishAte(f) {
+                f.meals++;
+                var newStage = getGrowthStage(f.meals);
+                if (newStage !== f.stage) {
+                    f.stage = newStage;
+                    updateFishText(f);
+                }
+            }
+
+            // Splash particles
+            function spawnSplash(x, viewportY) {
+                var chars = ["~", "'", ".", "*", "`", "^"];
+                var count = 3 + Math.floor(Math.random() * 4);
+                for (var s = 0; s < count; s++) {
+                    var sp = document.createElement("span");
+                    sp.className = "splash";
+                    sp.textContent = chars[Math.floor(Math.random() * chars.length)];
+                    var sx = x + (Math.random() - 0.5) * 40;
+                    var sy = viewportY;
+                    sp.style.left = sx + "px";
+                    sp.style.top = sy + "px";
+                    document.body.appendChild(sp);
+
+                    (function (el, px, py) {
+                        var vx = (Math.random() - 0.5) * 2;
+                        var vy = -(1.5 + Math.random() * 2.5);
+                        function tick() {
+                            vy += 0.08;
+                            px += vx;
+                            py += vy;
+                            el.style.left = px + "px";
+                            el.style.top = py + "px";
+                            if (py > viewportY + 10) {
+                                el.style.transition = "opacity 0.3s";
+                                el.style.opacity = "0";
+                                setTimeout(function () { el.remove(); }, 300);
+                                return;
+                            }
+                            requestAnimationFrame(tick);
+                        }
+                        requestAnimationFrame(tick);
+                    })(sp, sx, sy);
+                }
+            }
+
+            // Mouse state for press-and-hold attraction
+            var mouseDown = false;
+            var mouseHoldX = 0, mouseHoldY = 0;
+            var holdTimer = null;
+
+            document.addEventListener("mousedown", function (e) {
+                if (e.target.closest("a, button, nav, header")) return;
+                mouseDown = true;
+                mouseHoldX = e.clientX;
+                mouseHoldY = e.clientY;
+                // Drop food on initial click
+                var pellets = 2 + Math.floor(Math.random() * 2);
+                for (var p = 0; p < pellets; p++) {
+                    dropFood(e.clientX + (Math.random() - 0.5) * 30, e.clientY);
+                }
+                // Drip more food while holding
+                holdTimer = setInterval(function () {
+                    if (mouseDown) {
+                        dropFood(mouseHoldX + (Math.random() - 0.5) * 20, mouseHoldY);
+                    }
+                }, 400);
+            });
+
+            document.addEventListener("mousemove", function (e) {
+                if (mouseDown) {
+                    mouseHoldX = e.clientX;
+                    mouseHoldY = e.clientY;
+                }
+            });
+
+            document.addEventListener("mouseup", function () {
+                mouseDown = false;
+                if (holdTimer) { clearInterval(holdTimer); holdTimer = null; }
+            });
+
+            function findNearestFood(f) {
+                var best = null;
+                var bestDist = 250;
+                var tankTop = window.innerHeight - tankH;
+                for (var j = 0; j < foodPellets.length; j++) {
+                    var p = foodPellets[j];
+                    if (p.eaten) continue;
+                    if (p.posY < tankTop) continue;
+                    var foodTankY = window.innerHeight - p.posY;
+                    var dx = p.posX - f.x;
+                    var dy = foodTankY - f.y;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        best = { pellet: p, dx: dx, dy: dy, dist: dist };
+                    }
+                }
+                return best;
+            }
+
+            // Convert held mouse position to attraction target for fish
+            function getAttraction(f) {
+                if (mouseDown === false) return null;
+                var tankTop = window.innerHeight - tankH;
+                // Attract toward cursor X, and toward top of tank (fish swim up to surface)
+                var targetTankY = surfaceY - 4; // near the surface
+                var dx = mouseHoldX - f.x;
+                var dy = targetTankY - f.y;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist > 400) return null;
+                return { dx: dx, dy: dy, dist: dist };
+            }
+
+            function tickFish() {
+                for (var i = 0; i < fishes.length; i++) {
+                    var f = fishes[i];
+
+                    var hSpeed = f.speed * (0.4 + f.z * 0.6);
+
+                    // Priority 1: mouse hold attraction
+                    var attracted = getAttraction(f);
+                    // Priority 2: food
+                    var prey = attracted == null ? findNearestFood(f) : null;
+
+                    if (attracted) {
+                        if (attracted.dx > 5 && f.dir < 0) { f.dir = 1; updateFishText(f); }
+                        if (attracted.dx < -5 && f.dir > 0) { f.dir = -1; updateFishText(f); }
+                        f.vy += attracted.dy * 0.003;
+                    } else if (prey) {
+                        if (prey.dx > 5 && f.dir < 0) { f.dir = 1; updateFishText(f); }
+                        if (prey.dx < -5 && f.dir > 0) { f.dir = -1; updateFishText(f); }
+                        f.vy += prey.dy * 0.004;
+                        if (prey.dist < 12) {
+                            prey.pellet.eaten = true;
+                            prey.pellet.el.remove();
+                            fishAte(f);
+                        }
+                    }
+
+                    f.x += f.dir * hSpeed;
+
+                    // Turn around at screen edges
+                    var margin = 30;
+                    if (f.x > window.innerWidth - margin && f.dir > 0) {
+                        f.dir = -1; updateFishText(f);
+                    }
+                    if (f.x < margin && f.dir < 0) {
+                        f.dir = 1; updateFishText(f);
+                    }
+
+                    // Vertical: gentle sine drift (suppressed when attracted or chasing)
+                    f.yPhase += f.yFreq;
+                    if (attracted == null && prey == null) {
+                        var yTarget = (tankH * 0.5) + Math.sin(f.yPhase) * f.yAmp * tankH * 0.4;
+                        f.vy += (yTarget - f.y) * 0.01;
+                    }
+                    f.vy *= 0.95;
+                    f.y += f.vy;
+
+                    // Clamp y — allow breaching above surface
+                    if (f.y < 4) { f.y = 4; f.vy = Math.abs(f.vy) * 0.5; }
+
+                    // Splash when nearing surface at speed
+                    if (f.splashCooldown > 0) f.splashCooldown--;
+                    var nearSurface = f.y > surfaceY - 15;
+                    if (nearSurface && f.vy > 0.6 && f.splashCooldown <= 0) {
+                        spawnSplash(f.x, window.innerHeight - surfaceY);
+                        f.splashCooldown = 60; // ~1 second cooldown
+                    }
+
+                    // Soft ceiling above water — gravity pulls them back
+                    if (f.y > surfaceY) {
+                        f.vy -= 0.15;
+                    }
+                    // Hard ceiling so fish don't fly away
+                    if (f.y > surfaceY + 20) { f.y = surfaceY + 20; f.vy = -Math.abs(f.vy) * 0.3; }
+
+                    // Depth drift
+                    f.zDriftTimer--;
+                    if (f.zDriftTimer <= 0) {
+                        f.targetZ = 0.15 + Math.random() * 0.85;
+                        f.zDriftTimer = 300 + Math.floor(Math.random() * 500);
+                    }
+                    f.z += (f.targetZ - f.z) * 0.005;
+
+                    // Pitch from vertical velocity
+                    var pitch = Math.atan2(f.vy, hSpeed) * (180 / Math.PI) * f.dir;
+                    pitch = Math.max(-25, Math.min(25, pitch));
+
+                    // Render
+                    var opacity = 0.12 + f.z * 0.7;
+                    var fontSize = 0.55 + f.z * 0.45;
+
+                    f.el.style.left = f.x + "px";
+                    f.el.style.bottom = f.y + "px";
+                    f.el.style.opacity = opacity;
+                    f.el.style.fontSize = fontSize + "rem";
+                    f.el.style.transform = "rotate(" + (-pitch) + "deg)";
+                    f.el.style.zIndex = Math.floor(f.z * 10);
+                }
+
+                // Clean up eaten food
+                for (var k = foodPellets.length - 1; k >= 0; k--) {
+                    if (foodPellets[k].eaten) foodPellets.splice(k, 1);
+                }
+
+                requestAnimationFrame(tickFish);
+            }
+
+            // Seed permanent fish
+            makeFish(); makeFish(); makeFish(); makeFish();
+            requestAnimationFrame(tickFish);
+
+            function dropFood(x, y) {
+                var crumbs = [".", ",", "'", "`"];
+                var el = document.createElement("span");
+                el.className = "food";
+                el.textContent = crumbs[Math.floor(Math.random() * crumbs.length)];
+                el.style.left = x + "px";
+                el.style.top = y + "px";
+                document.body.appendChild(el);
+
+                var pellet = {
+                    el: el,
+                    posX: x,
+                    posY: y,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: 0,
+                    eaten: false
+                };
+                foodPellets.push(pellet);
+
+                var aquariumTop = window.innerHeight - tankH;
+                var floor = window.innerHeight - (0.3 + Math.random() * 0.5) * 16;
+
+                function fall() {
+                    if (pellet.eaten) return;
+                    pellet.vy += 0.04; // gentle gravity
+                    pellet.vx *= 0.99;
+                    pellet.posY += pellet.vy;
+                    pellet.posX += pellet.vx;
+                    el.style.top = pellet.posY + "px";
+                    el.style.left = pellet.posX + "px";
+
+                    if (pellet.posY > aquariumTop) {
+                        pellet.vy *= 0.85; // heavy water drag
+                        pellet.vx *= 0.92;
+                    }
+
+                    if (pellet.posY >= floor) {
+                        el.style.top = floor + "px";
+                        pellet.posY = floor;
+                        el.style.transition = "opacity 3s ease";
+                        el.style.opacity = "0";
+                        setTimeout(function () {
+                            pellet.eaten = true;
+                            el.remove();
+                        }, 3000);
+                        return;
+                    }
+
+                    requestAnimationFrame(fall);
+                }
+
+                setTimeout(function () { requestAnimationFrame(fall); }, Math.random() * 150);
+            }
+        })();
+
+        // -- Publications --
+        var ORCID_ID = "0009-0005-8604-3750";
+        var API = "https://pub.orcid.org/v3.0";
+        var ORCID_HEADERS = { "Accept": "application/vnd.orcid+json" };
+        var AUTHOR_NAME = "shrirajh";
+
+        var CATEGORIES = [
+            { key: "first", divider: null, test: function (r) { return r === "first" || r === "co-first" || r === "second"; } },
+            { key: "last", divider: "L A S T  A U T H O R", test: function (r) { return r === "last"; } },
+            { key: "collab", divider: "C O - A U T H O R E D", test: function () { return true; } }
+        ];
+
+        function resolveRole(pub) {
+            // Explicit override from pubs.json takes priority
+            if (pub.role) return pub.role;
+            var pos = pub.authorPosition;
+            var total = pub.totalAuthors;
+            if (pos === 0) return "first";
+            if (pos === 1) return "second";
+            if (total > 2 && pos === total - 1) return "last";
+            return "nth";
+        }
+
+        function classifyRole(role) {
+            for (var c = 0; c < CATEGORIES.length; c++) {
+                if (CATEGORIES[c].test(role)) return CATEGORIES[c].key;
+            }
+            return "collab";
+        }
+
+        function roleLabel(role) {
+            var labels = {
+                "first": "1st author",
+                "co-first": "co-1st author",
+                "second": "2nd author",
+                "last": "last author",
+                "nth": ""
+            };
+            return labels[role] || "";
+        }
+
+        function revealItems(items) {
+            // Store and clear titles for typeout
+            var titles = [];
+            for (var k = 0; k < items.length; k++) {
+                var el = items[k].querySelector(".pub-title");
+                titles.push(el.textContent);
+                el.textContent = "";
+            }
+
+            var TYPO_CHANCE = 0.015;
+            var NEARBY = "qwertyuiopasdfghjklzxcvbnm";
+
+            for (var idx = 0; idx < items.length; idx++) {
+                (function (li, fullTitle, delay) {
+                    setTimeout(function () {
+                        li.classList.add("visible");
+                        var titleEl = li.querySelector(".pub-title");
+                        var charIdx = 0;
+
+                        function typeChar() {
+                            if (charIdx >= fullTitle.length) return;
+                            var ch = fullTitle[charIdx];
+
+                            // Occasional mistype on letters
+                            if (ch.match(/[a-zA-Z]/) && Math.random() < TYPO_CHANCE) {
+                                var wrong = NEARBY[Math.floor(Math.random() * NEARBY.length)];
+                                if (ch === ch.toUpperCase()) wrong = wrong.toUpperCase();
+                                titleEl.textContent += wrong;
+                                // Pause, delete, retype correct
+                                setTimeout(function () {
+                                    titleEl.textContent = titleEl.textContent.slice(0, -1);
+                                    setTimeout(function () {
+                                        titleEl.textContent += ch;
+                                        charIdx++;
+                                        setTimeout(typeChar, 10 + Math.random() * 40);
+                                    }, 30 + Math.random() * 40);
+                                }, 60 + Math.random() * 80);
+                                return;
+                            }
+
+                            titleEl.textContent += ch;
+                            charIdx++;
+                            setTimeout(typeChar, 10 + Math.random() * 40);
+                        }
+                        typeChar();
+                    }, delay);
+                })(items[idx], titles[idx], idx * 300);
+            }
+        }
+
+        async function fetchOrcidWorks() {
+            var summaryRes = await fetch(API + "/" + ORCID_ID + "/works", { headers: ORCID_HEADERS });
+            if (summaryRes.ok === false) throw new Error(summaryRes.statusText);
+            var summaryData = await summaryRes.json();
+
+            var putCodes = [];
+            for (var g = 0; g < (summaryData.group || []).length; g++) {
+                var s = summaryData.group[g]["work-summary"] && summaryData.group[g]["work-summary"][0];
+                if (s) putCodes.push(s["put-code"]);
+            }
+            if (putCodes.length === 0) return [];
+
+            var fullRes = await fetch(API + "/" + ORCID_ID + "/works/" + putCodes.join(","), { headers: ORCID_HEADERS });
+            if (fullRes.ok === false) throw new Error(fullRes.statusText);
+            var fullData = await fullRes.json();
+
+            var works = [];
+            for (var e = 0; e < (fullData.bulk || []).length; e++) {
+                var w = fullData.bulk[e].work;
+                if (w == null) continue;
+
+                var title = w.title?.title?.value || "Untitled";
+                var year = w["publication-date"]?.year?.value || "";
+                var journal = w["journal-title"]?.value || "";
+                var extIds = w["external-ids"]?.["external-id"] || [];
+                var doi = "";
+                for (var d = 0; d < extIds.length; d++) {
+                    if (extIds[d]["external-id-type"] === "doi") { doi = extIds[d]["external-id-value"]; break; }
+                }
+
+                var contributors = w.contributors?.contributor || [];
+                var authorPosition = -1;
+                for (var i = 0; i < contributors.length; i++) {
+                    var name = (contributors[i]["credit-name"]?.value || "").toLowerCase();
+                    if (name.includes(AUTHOR_NAME)) { authorPosition = i; break; }
+                }
+
+                works.push({
+                    title: title, year: year, journal: journal, doi: doi,
+                    authorPosition: authorPosition, totalAuthors: contributors.length,
+                    role: null, summary: null
+                });
+            }
+            return works;
+        }
+
+        async function fetchPubsMeta() {
+            try {
+                var res = await fetch("pubs.json");
+                if (res.ok === false) return {};
+                return await res.json();
+            } catch (e) { return {}; }
+        }
+
+        function mergeWorksWithMeta(works, meta) {
+            for (var i = 0; i < works.length; i++) {
+                var w = works[i];
+                var key = w.doi || "";
+                var m = meta[key];
+                if (m) {
+                    if (m.role) w.role = m.role;
+                    if (m.summary) w.summary = m.summary;
+                    if (m.sortOrder != null) w.sortOrder = m.sortOrder;
+                    if (m.yearOverride) w.displayYear = m.yearOverride;
+                }
+            }
+            return works;
+        }
+
+        function metaToWorks(meta) {
+            var works = [];
+            for (var key in meta) {
+                var m = meta[key];
+                works.push({
+                    title: m.title, year: m.year, journal: m.journal, doi: m.doi,
+                    authorPosition: m.authorPosition, totalAuthors: m.totalAuthors,
+                    role: m.role, summary: m.summary,
+                    sortOrder: m.sortOrder != null ? m.sortOrder : null,
+                    displayYear: m.yearOverride || null
+                });
+            }
+            return works;
+        }
+
+        async function fetchPublications() {
+            var meta = await fetchPubsMeta();
+            var works = null;
+
+            try {
+                works = await fetchOrcidWorks();
+                if (works.length > 0) {
+                    works = mergeWorksWithMeta(works, meta);
+                } else {
+                    throw new Error("empty");
+                }
+            } catch (e) {
+                // Fallback to pubs.json
+                if (Object.keys(meta).length > 0) {
+                    works = metaToWorks(meta);
+                } else {
+                    var status = document.getElementById("pub-status");
+                    status.textContent = "could not load publications. visit orcid profile instead.";
+                    status.classList.remove("loading-cursor");
+                    return;
+                }
+            }
+
+            // Resolve roles and bucket
+            var buckets = { first: [], last: [], collab: [] };
+            for (var i = 0; i < works.length; i++) {
+                var w = works[i];
+                w.resolvedRole = resolveRole(w);
+                var cat = classifyRole(w.resolvedRole);
+                buckets[cat].push(w);
+            }
+
+            for (var key in buckets) {
+                buckets[key].sort(function (a, b) {
+                    // Explicit sortOrder first (lower = higher priority), unsorted last
+                    var sa = a.sortOrder != null ? a.sortOrder : 999999;
+                    var sb = b.sortOrder != null ? b.sortOrder : 999999;
+                    if (sa !== sb) return sa - sb;
+                    // Then by year descending
+                    var ya = a.displayYear || a.year || "0";
+                    var yb = b.displayYear || b.year || "0";
+                    if (ya !== yb) return yb.localeCompare(ya);
+                    // Then alphabetically by title
+                    return (a.title || "").localeCompare(b.title || "");
+                });
+            }
+
+            // Render
+            var container = document.getElementById("pub-sections");
+            document.getElementById("pub-status").style.display = "none";
+            document.querySelector("#publications h2").innerHTML = "publications (" + works.length + ') <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;">+ click to expand</span>';
+            var allItems = [];
+            for (var c = 0; c < CATEGORIES.length; c++) {
+                var cat = CATEGORIES[c];
+                var catWorks = buckets[cat.key];
+                if (catWorks.length === 0) continue;
+
+                if (cat.divider) {
+                    var div = document.createElement("div");
+                    div.className = "pub-divider";
+                    div.innerHTML = "<span>" + esc(cat.divider) + "</span>";
+                    container.appendChild(div);
+                }
+
+                var ul = document.createElement("ul");
+                ul.className = "pub-list";
+
+                for (var j = 0; j < catWorks.length; j++) {
+                    var pw = catWorks[j];
+                    var li = document.createElement("li");
+
+                    var html = '<span class="pub-title">' + esc(pw.title) + "</span>";
+                    var rl = roleLabel(pw.resolvedRole);
+                    if (rl) html += '<span class="pub-role">' + esc(rl) + "</span>";
+                    var journalText = pw.journal || "preprint";
+                    html += '<br><span class="pub-journal">' + esc(journalText) + "</span>";
+                    var showYear = pw.displayYear || pw.year;
+                    if (showYear) html += ' <span class="pub-year">(' + esc(showYear) + ")</span>";
+                    if (pw.doi) html += '<br><a href="https://doi.org/' + encodeURIComponent(pw.doi) + '">' + esc(pw.doi) + "</a>";
+
+                    if (pw.summary) {
+                        html += '<div class="pub-summary">' + esc(pw.summary).replace(/\n/g, "<br>") + "</div>";
+                        li.className = "expandable";
+                    }
+
+                    li.innerHTML = html;
+                    ul.appendChild(li);
+                    allItems.push(li);
+                }
+
+                container.appendChild(ul);
+            }
+
+            // Bind expand clicks (after innerHTML set)
+            var expandables = container.querySelectorAll("li.expandable");
+            for (var x = 0; x < expandables.length; x++) {
+                (function (li) {
+                    li.addEventListener("click", function (e) {
+                        if (e.target.tagName === "A") return;
+                        li.classList.toggle("expanded");
+                        li.querySelector(".pub-summary").classList.toggle("open");
+                    });
+                })(expandables[x]);
+            }
+
+            revealItems(allItems);
+        }
+
+        function esc(s) {
+            var d = document.createElement("div");
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        fetchPublications();
     </script>
+</body>
 </html>
