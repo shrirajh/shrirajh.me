@@ -84,7 +84,7 @@
     "yearOverride": null
   },
   "10.1111/imj.16590": {
-    "title": "Copying in medical documentation: developing an evidence\u2010based approach",
+    "title": "Copying in medical documentation: developing an evidence‐based approach",
     "year": "2025",
     "journal": "Internal Medicine Journal",
     "doi": "10.1111/imj.16590",
@@ -96,7 +96,7 @@
     "yearOverride": null
   },
   "10.1111/imj.16565": {
-    "title": "Rule\u2010based clinician\u2010developed programmes can facilitate haemodialysis clinical workflows",
+    "title": "Rule‐based clinician‐developed programmes can facilitate haemodialysis clinical workflows",
     "year": "2024",
     "journal": "Internal Medicine Journal",
     "doi": "10.1111/imj.16565",
@@ -156,7 +156,7 @@
     "yearOverride": null
   },
   "10.1111/ajr.70037": {
-    "title": "When One Size Does not Fit All\u2014Artificial Intelligence in Australian Rural Health",
+    "title": "When One Size Does not Fit All—Artificial Intelligence in Australian Rural Health",
     "year": "2025",
     "journal": "Australian Journal of Rural Health",
     "doi": "10.1111/ajr.70037",
@@ -264,7 +264,7 @@
     "yearOverride": null
   },
   "10.1071/ah25085": {
-    "title": "The influence of specialty training selection criteria on medical students' career pathway choices in Australia",
+    "title": "The influence of specialty training selection criteria on medical students’ career pathway choices in Australia",
     "year": "2025",
     "journal": "Australian Health Review",
     "doi": "10.1071/ah25085",
@@ -284,6 +284,42 @@
     "totalAuthors": 31,
     "role": null,
     "summary": "We developed a machine learning model to predict the emergency department patient journey, enabling early identification of patients likely to require admission or extended stays.",
+    "sortOrder": null,
+    "yearOverride": null
+  },
+  "10.1136/bmjno-2025-anzan.117": {
+    "title": "3567 Current specialty training selection criteria reduce medical students’ interest in neurology as a career pathway",
+    "year": "2025",
+    "journal": "BMJ Neurology",
+    "doi": "10.1136/bmjno-2025-anzan.117",
+    "authorPosition": 4,
+    "totalAuthors": 8,
+    "role": null,
+    "summary": "We surveyed medical students and found that exposure to specialty selection criteria significantly reduced interest across multiple specialties, with neurology, ICU, and ophthalmology most affected. Research requirements and competitiveness were the key deterrents.\n\nI built the analysis and visualisation tooling.",
+    "sortOrder": null,
+    "yearOverride": null
+  },
+  "10.2139/ssrn.5698664": {
+    "title": "Electronic Quantification of Bowel Timing and Automated Alerts Reduce Inpatient Constipation",
+    "year": "2025",
+    "journal": "",
+    "doi": "10.2139/ssrn.5698664",
+    "authorPosition": 5,
+    "totalAuthors": 19,
+    "role": null,
+    "summary": "We quantified bowel motion timing electronically and delivered automated daily notifications to physicians when patients exceeded 72 hours without a bowel motion, reducing the rate of severe constipation (BNO \u22655 days) from 5.6% to 1.9%.\n\nI helped engineer this into production. I maintain the notification platform.",
+    "sortOrder": null,
+    "yearOverride": null
+  },
+  "10.1111/tme.70020": {
+    "title": "Intravenous immunoglobulin weaning evaluation with zero‐shot large language model classification",
+    "year": "2026",
+    "journal": "Transfusion Medicine",
+    "doi": "10.1111/tme.70020",
+    "authorPosition": 1,
+    "totalAuthors": 23,
+    "role": null,
+    "summary": "We applied a zero-shot LLM to classify neurology outpatients' suitability for IVIg weaning from clinic notes, achieving 78.6% classification accuracy and identifying a conservatively estimated $84,702 in potential annual cost savings from IVIg de-escalation.\n\nI helped engineer this into production. I maintain the extraction pipeline.",
     "sortOrder": null,
     "yearOverride": null
   }
