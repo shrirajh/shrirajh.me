@@ -31,7 +31,7 @@
     "authorPosition": 2,
     "totalAuthors": 23,
     "role": null,
-    "summary": "We paired an AI discharge-prediction algorithm with a weekend interprofessional flow team, and found a significant increase in weekend discharges (18% vs 14%) with associated cost savings.",
+    "summary": "We paired an AI discharge-prediction algorithm with a weekend interprofessional flow team, and found a significant increase in weekend discharges (18% vs 14%) with associated cost savings.\n\nI maintain the algorithm and inference server for this.",
     "sortOrder": null,
     "yearOverride": null
   },
@@ -43,7 +43,7 @@
     "authorPosition": 0,
     "totalAuthors": 22,
     "role": null,
-    "summary": "We implemented a digital notification platform to push real-time glycaemic alerts to clinicians, and found it significantly reduced inpatient dysglycaemia events.\n\nI helped engineer this into production. I maintain the notification platform.",
+    "summary": "We implemented a digital notification platform to push ahead-of-time glycaemic alerts to clinicians, and found it significantly reduced inpatient dysglycaemia events.\n\nI helped engineer this into production. I maintain the notification platform.",
     "sortOrder": null,
     "yearOverride": null
   },
@@ -55,7 +55,7 @@
     "authorPosition": 0,
     "totalAuthors": 15,
     "role": null,
-    "summary": "We deployed a conversational AI assistant to support hospital inpatients and assessed acceptability, finding patients were broadly receptive to AI-generated interactions when used alongside clinician oversight.\n\nI helped engineer this into production. I maintain the conversational AI platform.",
+    "summary": "We sat an LLM alongside physician trainees in the RACP clinical exam. It scored comparably on empathy, politeness, and comprehensiveness. Notably, patients disclosed sensitive clinical information to the AI that they had withheld from human examiners.\n\nI helped engineer this into production. I maintain the conversational AI platform.",
     "sortOrder": null,
     "yearOverride": null
   },
@@ -103,7 +103,7 @@
     "authorPosition": 0,
     "totalAuthors": 9,
     "role": null,
-    "summary": "We built an automated haemodialysis patient finder to detect maintenance dialysis patients admitted under non-nephrology services, achieving zero false positives and zero false negatives over six months.\n\nI helped engineer this into production. I maintain the patient detection system.",
+    "summary": "We built a system that automatically detects dialysis patients admitted under non-nephrology teams and notifies the renal service before complications arise, achieving zero false positives and zero false negatives over six months.\n\nI helped engineer this into production. I maintain the patient detection system.",
     "sortOrder": null,
     "yearOverride": null
   },
@@ -318,7 +318,7 @@
     "doi": "10.1111/tme.70020",
     "authorPosition": 1,
     "totalAuthors": 23,
-    "role": "co-first",
+    "role": null,
     "summary": "We applied a zero-shot LLM to classify neurology outpatients' suitability for IVIg weaning from clinic notes, achieving 78.6% classification accuracy and identifying a conservatively estimated $84,702 in potential annual cost savings from IVIg de-escalation.\n\nI helped engineer this into production. I maintain the extraction pipeline.",
     "sortOrder": null,
     "yearOverride": null
