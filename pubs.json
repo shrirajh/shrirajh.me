@@ -318,7 +318,7 @@
     "doi": "10.1111/tme.70020",
     "authorPosition": 1,
     "totalAuthors": 23,
-    "role": null,
+    "role": "co-first",
     "summary": "We applied a zero-shot LLM to classify neurology outpatients' suitability for IVIg weaning from clinic notes, achieving 78.6% classification accuracy and identifying a conservatively estimated $84,702 in potential annual cost savings from IVIg de-escalation.\n\nI helped engineer this into production. I maintain the extraction pipeline.",
     "sortOrder": null,
     "yearOverride": null
