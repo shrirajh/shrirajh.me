@@ -340,27 +340,27 @@
     </style>
 </head>
 <body>
-    <header>
+    <header role="banner">
         <h1>shrirajh.me</h1>
         <div class="blank">I write code and prescriptions</div>
         <button id="theme-toggle"></button>
     </header>
 
-    <nav>
+    <nav role="navigation">
         <a href="https://github.com/shrirajh">github</a>
         <a href="https://scholar.google.com/citations?user=aY2GGS0AAAAJ&hl=en">scholar</a>
         <a href="https://orcid.org/0009-0005-8604-3750">orcid</a>
         <span class="ct" id="ct0"></span>
     </nav>
 
-    <section id="publications">
-        <h2>publications <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;">+ click to expand</span></h2>
-        <div id="pub-status" class="loading-cursor">loading</div>
+    <section id="publications" aria-label="Publications">
+        <h2>publications <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;" aria-hidden="true">+ click to expand</span></h2>
+        <div id="pub-status" class="loading-cursor" role="status" aria-live="polite">loading</div>
         <div id="pub-sections"></div>
     </section>
 
-    <div id="aquarium"></div>
-    <div style="position:fixed;bottom:0.3rem;left:0;width:100%;text-align:center;font-size:0.6rem;color:var(--fg-faint);opacity:0.4;z-index:1000;pointer-events:none;">// click to feed</div>
+    <div id="aquarium" aria-hidden="true"></div>
+    <div style="position:fixed;bottom:0.3rem;left:0;width:100%;text-align:center;font-size:0.6rem;color:var(--fg-faint);opacity:0.4;z-index:1000;pointer-events:none;" aria-hidden="true">// click to feed</div>
 
     <script>
         // -- Contact --
@@ -404,6 +404,7 @@
                 linkEl = document.createElement("a");
                 linkEl.href = dec(pre) + full;
                 linkEl.title = dec(tt);
+                linkEl.setAttribute("aria-label", full);
                 linkEl.className = "ct";
                 linkEl.style.opacity = "0";
                 linkEl.style.transition = "opacity 0.2s ease";
@@ -443,6 +444,9 @@
                 if (ready) return;
                 ready = true;
                 c.textContent = dec(l);
+                c.setAttribute("role", "button");
+                c.setAttribute("tabindex", "0");
+                c.setAttribute("aria-label", dec([120,79,92,79,75,70,10,73,69,68,94,75,73,94,10,75,78,78,88,79,89,89]));
                 var spinner = null;
                 var spinFrames = ["|", "/", "-", "\\"];
                 var spinIdx = 0;
@@ -483,6 +487,14 @@
                         hoverTimer = setTimeout(reveal, 600);
                     }
                 });
+                c.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        if (!revealed && !hoverTimer) {
+                            hoverTimer = setTimeout(reveal, 600);
+                        }
+                    }
+                });
             }
             document.addEventListener("mousemove", init, { once: true });
             document.addEventListener("touchstart", init, { once: true });
@@ -496,7 +508,10 @@
 
         function applyTheme(theme) {
             document.documentElement.classList.toggle("dark", theme === "dark");
-            document.getElementById("theme-toggle").textContent = theme === "dark" ? "light" : "dark";
+            var btn = document.getElementById("theme-toggle");
+            var label = theme === "dark" ? "light" : "dark";
+            btn.textContent = label;
+            btn.setAttribute("aria-label", "Switch to " + label + " mode");
         }
 
         function initTheme() {
@@ -606,6 +621,7 @@
 
                 var el = document.createElement("span");
                 el.className = "fish";
+                el.setAttribute("aria-hidden", "true");
                 el.textContent = goRight ? form.ltr : form.rtl;
                 tank.appendChild(el);
 
@@ -658,6 +674,7 @@
                 for (var s = 0; s < count; s++) {
                     var sp = document.createElement("span");
                     sp.className = "splash";
+                    sp.setAttribute("aria-hidden", "true");
                     sp.textContent = chars[Math.floor(Math.random() * chars.length)];
                     var sx = x + (Math.random() - 0.5) * 40;
                     var sy = viewportY;
@@ -859,6 +876,7 @@
                 var crumbs = [".", ",", "'", "`"];
                 var el = document.createElement("span");
                 el.className = "food";
+                el.setAttribute("aria-hidden", "true");
                 el.textContent = crumbs[Math.floor(Math.random() * crumbs.length)];
                 el.style.left = x + "px";
                 el.style.top = y + "px";
@@ -1135,7 +1153,7 @@
             // Render
             var container = document.getElementById("pub-sections");
             document.getElementById("pub-status").style.display = "none";
-            document.querySelector("#publications h2").innerHTML = "publications (" + works.length + ') <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;">+ click to expand</span>';
+            document.querySelector("#publications h2").innerHTML = "publications (" + works.length + ') <span style="font-size:0.7rem;color:var(--fg-faint);opacity:0.5;" aria-hidden="true">+ click to expand</span>';
             var allItems = [];
             for (var c = 0; c < CATEGORIES.length; c++) {
                 var cat = CATEGORIES[c];
@@ -1168,6 +1186,9 @@
                     if (pw.summary) {
                         html += '<div class="pub-summary">' + esc(pw.summary).replace(/\n/g, "<br>") + "</div>";
                         li.className = "expandable";
+                        li.setAttribute("role", "button");
+                        li.setAttribute("tabindex", "0");
+                        li.setAttribute("aria-expanded", "false");
                     }
 
                     li.innerHTML = html;
@@ -1182,10 +1203,15 @@
             var expandables = container.querySelectorAll("li.expandable");
             for (var x = 0; x < expandables.length; x++) {
                 (function (li) {
-                    li.addEventListener("click", function (e) {
+                    function toggle(e) {
                         if (e.target.tagName === "A") return;
                         li.classList.toggle("expanded");
                         li.querySelector(".pub-summary").classList.toggle("open");
+                        li.setAttribute("aria-expanded", li.classList.contains("expanded") ? "true" : "false");
+                    }
+                    li.addEventListener("click", toggle);
+                    li.addEventListener("keydown", function (e) {
+                        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(e); }
                     });
                 })(expandables[x]);
             }
