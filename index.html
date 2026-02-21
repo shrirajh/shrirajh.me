@@ -368,38 +368,71 @@
             var c = document.getElementById("ct0");
             var k = 42;
             var p = [89,66,88,67,88,75,64,66,4,89,75,94,66,79,75,65,79,79,88,94,66,83];
-            var d = [89,75,4,77,69,92,4,75,95];
+            var ds = [[89,75,4,77,69,92,4,75,95],[75,78,79,70,75,67,78,79,4,79,78,95,4,75,95]];
             var l = [73,69,68,94,75,73,94];
             var ready = false;
             var revealed = false;
             var hoverTimer = null;
+            var curIdx = 0;
+            var linkEl = null;
+            var swapBtn = null;
 
             function dec(a) { return a.map(function (c) { return String.fromCharCode(c ^ k); }).join(""); }
-            function addr() { return dec(p) + String.fromCharCode(106 ^ k) + dec(d); }
+            function addr(i) { return dec(p) + String.fromCharCode(106 ^ k) + dec(ds[i]); }
+            var tt = [102,69,75,78,79,78,10,69,68,10,67,68,94,79,88,75,73,94,67,69,68,10,94,69,10,78,79,94,79,88,10,89,73,88,75,90,79,88,89,4,10,121,69,88,88,83,10,67,76,10,94,66,67,89,10,93,75,89,10,67,68,73,69,68,92,79,68,67,79,68,94,4];
+            var pre = [71,75,67,70,94,69,16];
+
+            function setAddr(i) {
+                var full = addr(i);
+                linkEl.href = dec(pre) + full;
+                linkEl.textContent = full;
+            }
+
+            function doSwap() {
+                curIdx = (curIdx + 1) % ds.length;
+                linkEl.style.opacity = "0";
+                setTimeout(function () {
+                    setAddr(curIdx);
+                    linkEl.style.opacity = "1";
+                }, 200);
+            }
 
             function reveal() {
                 if (revealed) return;
                 revealed = true;
-                var full = addr();
-                var a = document.createElement("a");
-                a.href = dec([71,75,67,70,94,69,16]) + full;
-                a.className = "ct";
-                a.style.opacity = "0";
-                a.style.transition = "opacity 0.4s ease";
+                var full = addr(curIdx);
+                linkEl = document.createElement("a");
+                linkEl.href = dec(pre) + full;
+                linkEl.title = dec(tt);
+                linkEl.className = "ct";
+                linkEl.style.opacity = "0";
+                linkEl.style.transition = "opacity 0.2s ease";
+
+                swapBtn = document.createElement("span");
+                swapBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:0.4em;cursor:pointer;opacity:0.4;transition:opacity 0.2s"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>';
+                swapBtn.style.opacity = "0";
+                swapBtn.style.transition = "opacity 0.3s ease";
+                swapBtn.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); doSwap(); });
+                swapBtn.addEventListener("mouseenter", function () { swapBtn.querySelector("svg").style.opacity = "1"; });
+                swapBtn.addEventListener("mouseleave", function () { swapBtn.querySelector("svg").style.opacity = "0.4"; });
+
                 c.style.transition = "opacity 0.2s ease";
                 c.style.opacity = "0";
                 setTimeout(function () {
-                    c.parentNode.replaceChild(a, c);
+                    var parent = c.parentNode;
+                    parent.replaceChild(linkEl, c);
+                    parent.insertBefore(swapBtn, linkEl.nextSibling);
                     // Typeout
                     var i = 0;
                     function type() {
                         if (i >= full.length) {
-                            a.style.opacity = "1";
+                            linkEl.style.opacity = "1";
+                            swapBtn.style.opacity = "1";
                             return;
                         }
-                        a.textContent += full[i];
+                        linkEl.textContent += full[i];
                         i++;
-                        a.style.opacity = "1";
+                        linkEl.style.opacity = "1";
                         setTimeout(type, 20 + Math.random() * 30);
                     }
                     type();
