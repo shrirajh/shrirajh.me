@@ -419,6 +419,7 @@
             var fadeTimer = null;
             var shown = false;
             var typing = false;
+            var done = false;
 
             // Proximity-driven blink → spinner
             var mouseX = -1, mouseY = -1;
@@ -517,7 +518,7 @@
                 typing = true;
                 var i = 0;
                 function next() {
-                    if (i >= text.length) { typeTimer = null; typing = false; return; }
+                    if (i >= text.length) { typeTimer = null; typing = false; done = true; return; }
                     tip.textContent += text[i];
                     tip.style.height = measureHeight() + "px";
                     i++;
@@ -534,7 +535,7 @@
             }
 
             function hide() {
-                if (!shown) return;
+                if (!shown || done) return;
                 shown = false;
                 if (typeTimer) { clearTimeout(typeTimer); typeTimer = null; }
                 tip.classList.remove("visible");
